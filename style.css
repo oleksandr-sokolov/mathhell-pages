@@ -1,0 +1,203 @@
+/* MathHell: Balance — landing / support / privacy.
+   Colors and the squared-notebook look mirror the app's src/ui/theme.ts
+   so the site feels like the product: warm paper, light-blue cell grid,
+   blue-black ink, red-pen accents, Caveat handwriting. */
+
+:root {
+  --paper: #fbf8f0;
+  --surface: #ffffff;
+  --surface-alt: #f1ede2;
+  --grid: rgba(96, 150, 220, 0.18);
+  --margin: rgba(217, 83, 79, 0.45);
+  --ink: #1e2a4a;
+  --ink-soft: rgba(30, 42, 74, 0.66);
+  --ink-faint: rgba(30, 42, 74, 0.4);
+  --line: rgba(30, 42, 74, 0.22);
+  --accent: #3b6fd4;
+  --success: #3f9b6b;
+  --warning: #e8963c;
+  --danger: #d9534f;
+  --r-card: 14px;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  /* the notebook page: paper + cell grid + the classic red margin line */
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+.wrap {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 28px 22px 72px;
+}
+
+.hand {
+  font-family: "Caveat", cursive;
+}
+
+/* ---------- Top bar ---------- */
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 40px;
+}
+.nav .logo {
+  width: 42px;
+  height: 42px;
+  border-radius: 11px;
+  border: 2px solid var(--line);
+}
+.nav .brand {
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  font-size: 17px;
+}
+.nav .spacer { flex: 1; }
+.nav a {
+  color: var(--ink-soft);
+  text-decoration: none;
+  font-size: 14px;
+  margin-left: 18px;
+}
+.nav a:hover { color: var(--ink); }
+
+/* ---------- Hero ---------- */
+.hero {
+  text-align: center;
+  padding: 18px 0 8px;
+}
+.hero h1 {
+  font-family: "Caveat", cursive;
+  font-size: clamp(46px, 9vw, 84px);
+  line-height: 1.02;
+  margin: 0 0 16px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+.hero h1 .accent { color: var(--accent); }
+.hero h1 .danger { color: var(--danger); }
+.hero p.lead {
+  font-size: clamp(16px, 2.4vw, 20px);
+  color: var(--ink-soft);
+  max-width: 620px;
+  margin: 0 auto 28px;
+}
+
+/* ---------- Buttons (ink outline, like the app's chalkBorder) ---------- */
+.btn {
+  display: inline-block;
+  padding: 12px 26px;
+  border-radius: var(--r-card);
+  background: var(--surface);
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 15px;
+  border: 2px solid var(--ink-soft);
+  transition: transform 0.09s ease, background 0.12s ease;
+}
+.btn:hover { transform: translateY(-1px); background: var(--surface-alt); }
+.btn:active { transform: scale(0.98); }
+.btn.accent { color: var(--accent); border-color: var(--accent); }
+
+/* ---------- Feature cards ---------- */
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 18px;
+  margin: 56px 0;
+}
+.card {
+  background: var(--surface);
+  border-radius: var(--r-card);
+  padding: 22px 22px 24px;
+  border: 2px solid var(--line);
+}
+.card .dot {
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  display: grid;
+  place-items: center;
+  font-size: 20px;
+  margin-bottom: 14px;
+  background: var(--surface-alt);
+  border: 1px solid var(--line);
+}
+.card h3 { margin: 0 0 6px; font-size: 17px; }
+.card p { margin: 0; color: var(--ink-soft); font-size: 14.5px; }
+
+/* ---------- Content pages (support / privacy) ---------- */
+.page h1 {
+  font-family: "Caveat", cursive;
+  font-size: clamp(38px, 6vw, 56px);
+  margin: 6px 0 6px;
+  font-weight: 700;
+}
+.page .updated { color: var(--ink-faint); font-size: 13px; margin-bottom: 30px; }
+.panel {
+  background: var(--surface);
+  border-radius: var(--r-card);
+  padding: 26px 28px;
+  border: 2px solid var(--line);
+  margin-bottom: 20px;
+}
+.panel h2 {
+  font-size: 19px;
+  margin: 0 0 10px;
+}
+.panel h2 .tag { color: var(--accent); }
+.panel p, .panel li { color: var(--ink-soft); font-size: 15px; }
+.panel a { color: var(--accent); text-decoration: none; }
+.panel a:hover { text-decoration: underline; }
+.panel ul { padding-left: 20px; margin: 8px 0 0; }
+.panel li { margin-bottom: 6px; }
+.pill {
+  display: inline-block;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--success);
+  background: var(--surface-alt);
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  margin-bottom: 16px;
+}
+.mail {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+/* ---------- Footer ---------- */
+.footer {
+  margin-top: 56px;
+  padding-top: 24px;
+  border-top: 2px solid var(--margin);
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  align-items: center;
+  color: var(--ink-faint);
+  font-size: 13.5px;
+}
+.footer a { color: var(--ink-soft); text-decoration: none; }
+.footer a:hover { color: var(--ink); }
+.footer .spacer { flex: 1; }
