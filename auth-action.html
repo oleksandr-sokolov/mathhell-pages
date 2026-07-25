@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MathHell: Balance — Email</title>
+  <meta name="robots" content="noindex" />
+  <link rel="icon" href="assets/icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .action { max-width: 460px; margin: 8vh auto 0; text-align: center; }
+    .action .mark { font-size: 56px; line-height: 1; margin-bottom: 10px; }
+    .action h1 { font-family: "Caveat", cursive; font-size: 40px; margin: 0 0 10px; }
+    .action p { color: var(--ink-soft); margin: 0 0 22px; }
+    .action .ok { color: var(--success); }
+    .action .bad { color: var(--danger); }
+  </style>
+</head>
+<body>
+  <!--
+    Landing page for Firebase Auth email links.
+
+    It exists for one measurable reason: SpamAssassin scores any message that
+    links to *.firebaseapp.com / *.web.app with URI_FIREBASEAPP (-3,
+    "possible phishing"), which alone pushed the confirmation mail into spam.
+    Pointing Firebase's action URL here moves the link onto github.io and
+    drops that penalty.
+
+    Only email confirmation is handled in-page (a single REST call). Password
+    reset and email recovery need Google's own form, so those modes are simply
+    forwarded to the original handler with the query string intact — the mail
+    still carries a github.io link, and no flow is reimplemented.
+  -->
+  <div class="wrap">
+    <div class="action">
+      <div class="mark hand" id="mark">✎</div>
+      <h1 id="title">…</h1>
+      <p id="body"></p>
+      <a class="btn accent" id="home" href="index.html" hidden>MathHell: Balance</a>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var FALLBACK = 'https://mathhell---balance.firebaseapp.com/__/auth/action';
+      var q = new URLSearchParams(window.location.search);
+      var mode = q.get('mode');
+      var oobCode = q.get('oobCode');
+      var apiKey = q.get('apiKey');
+
+      // Anything needing Google's own form (password reset, email recovery,
+      // email-link sign-in) goes straight through, query string untouched.
+      if (mode !== 'verifyEmail' || !oobCode || !apiKey) {
+        window.location.replace(FALLBACK + window.location.search);
+        return;
+      }
+
+      var T = {
+        en: ['Confirming…', 'Email confirmed!', 'You can close this page and go back to the game.', "This link didn't work", 'It may have expired or already been used. Open the game and send the email again.'],
+        uk: ['Підтверджуємо…', 'Пошту підтверджено!', 'Можеш закрити цю сторінку й повертатися в гру.', 'Посилання не спрацювало', 'Схоже, воно застаріле або вже використане. Відкрий гру й надішли лист ще раз.'],
+        de: ['Wird bestätigt…', 'E-Mail bestätigt!', 'Du kannst diese Seite schließen und zurück ins Spiel.', 'Dieser Link hat nicht funktioniert', 'Er ist vermutlich abgelaufen oder wurde schon benutzt. Öffne das Spiel und sende die E-Mail erneut.'],
+        es: ['Confirmando…', '¡Correo confirmado!', 'Puedes cerrar esta página y volver al juego.', 'Este enlace no funcionó', 'Puede que haya caducado o ya se haya usado. Abre el juego y envía el correo de nuevo.'],
+        fr: ['Confirmation…', 'E-mail confirmé !', 'Tu peux fermer cette page et retourner au jeu.', "Ce lien n'a pas fonctionné", 'Il a peut-être expiré ou déjà été utilisé. Ouvre le jeu et renvoie l’e-mail.'],
+        it: ['Conferma in corso…', 'Email confermata!', 'Puoi chiudere questa pagina e tornare al gioco.', 'Questo link non ha funzionato', 'Potrebbe essere scaduto o già usato. Apri il gioco e invia di nuovo l’email.'],
+        pl: ['Potwierdzanie…', 'E-mail potwierdzony!', 'Możesz zamknąć tę stronę i wrócić do gry.', 'Ten link nie zadziałał', 'Mógł wygasnąć lub już zostać użyty. Otwórz grę i wyślij e-mail ponownie.'],
+        nl: ['Bevestigen…', 'E-mail bevestigd!', 'Je kunt deze pagina sluiten en terug naar het spel.', 'Deze link werkte niet', 'Hij is mogelijk verlopen of al gebruikt. Open het spel en verstuur de e-mail opnieuw.'],
+        sv: ['Bekräftar…', 'E-post bekräftad!', 'Du kan stänga sidan och gå tillbaka till spelet.', 'Länken fungerade inte', 'Den kan ha gått ut eller redan använts. Öppna spelet och skicka mejlet igen.'],
+        da: ['Bekræfter…', 'E-mail bekræftet!', 'Du kan lukke siden og gå tilbage til spillet.', 'Linket virkede ikke', 'Det er måske udløbet eller allerede brugt. Åbn spillet og send mailen igen.'],
+        no: ['Bekrefter…', 'E-post bekreftet!', 'Du kan lukke siden og gå tilbake til spillet.', 'Lenken virket ikke', 'Den kan ha utløpt eller allerede vært brukt. Åpne spillet og send e-posten på nytt.'],
+        fi: ['Vahvistetaan…', 'Sähköposti vahvistettu!', 'Voit sulkea sivun ja palata peliin.', 'Linkki ei toiminut', 'Se on ehkä vanhentunut tai jo käytetty. Avaa peli ja lähetä viesti uudelleen.'],
+        et: ['Kinnitame…', 'E-post kinnitatud!', 'Võid selle lehe sulgeda ja mängu juurde naasta.', 'Link ei töötanud', 'See võib olla aegunud või juba kasutatud. Ava mäng ja saada kiri uuesti.'],
+        lt: ['Patvirtinama…', 'El. paštas patvirtintas!', 'Gali uždaryti šį puslapį ir grįžti į žaidimą.', 'Nuoroda nesuveikė', 'Ji galėjo pasenti arba jau buvo panaudota. Atidaryk žaidimą ir išsiųsk laišką dar kartą.'],
+        lv: ['Apstiprinām…', 'E-pasts apstiprināts!', 'Vari aizvērt šo lapu un atgriezties spēlē.', 'Saite nenostrādāja', 'Tā, iespējams, ir novecojusi vai jau izmantota. Atver spēli un nosūti vēstuli vēlreiz.'],
+        ja: ['確認中…', 'メールアドレスの確認が完了しました。', 'このページを閉じてゲームに戻れます。', 'リンクが使えませんでした', '期限切れか、すでに使用済みの可能性があります。ゲームを開いてもう一度メールを送ってください。'],
+        ko: ['확인 중…', '이메일이 확인되었어요!', '이 페이지를 닫고 게임으로 돌아가세요.', '링크가 작동하지 않았어요', '만료되었거나 이미 사용된 링크일 수 있어요. 게임을 열어 메일을 다시 보내주세요.'],
+        zh: ['确认中…', '邮箱已确认！', '可以关闭此页面，回到游戏。', '链接无效', '它可能已过期或被使用过。请打开游戏重新发送邮件。'],
+        ar: ['جارٍ التأكيد…', 'تم تأكيد البريد!', 'يمكنك إغلاق هذه الصفحة والعودة إلى اللعبة.', 'لم يعمل هذا الرابط', 'ربما انتهت صلاحيته أو استُخدم من قبل. افتح اللعبة وأعد إرسال الرسالة.']
+      };
+
+      // Firebase appends the locale it sent the mail in as ?lang=
+      var lang = (q.get('lang') || navigator.language || 'en').slice(0, 2).toLowerCase();
+      var t = T[lang] || T.en;
+      document.documentElement.lang = lang;
+      if (lang === 'ar') document.documentElement.dir = 'rtl';
+
+      var mark = document.getElementById('mark');
+      var title = document.getElementById('title');
+      var body = document.getElementById('body');
+      var home = document.getElementById('home');
+      title.textContent = t[0];
+
+      function settle(ok) {
+        mark.textContent = ok ? '✓' : '✕';
+        mark.className = 'mark hand ' + (ok ? 'ok' : 'bad');
+        title.textContent = ok ? t[1] : t[3];
+        body.textContent = ok ? t[2] : t[4];
+        home.hidden = false;
+      }
+
+      // accounts:update with just an oobCode is exactly what Google's own
+      // handler posts to confirm an address — no SDK needed.
+      fetch('https://identitytoolkit.googleapis.com/v1/accounts:update?key=' + encodeURIComponent(apiKey), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ oobCode: oobCode })
+      })
+        .then(function (r) { settle(r.ok); })
+        .catch(function () { settle(false); });
+    })();
+  </script>
+</body>
+</html>
