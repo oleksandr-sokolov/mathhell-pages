@@ -25,7 +25,7 @@
     </nav>
 
     <h1>Privacy Policy</h1>
-    <p class="updated">Last updated: July 11, 2026</p>
+    <p class="updated">Last updated: July 28, 2026</p>
 
     <div class="panel">
       <span class="pill">● The short version</span>
@@ -38,11 +38,13 @@
           generated for you.</li>
         <li>The leaderboard stores your <strong>display name and best
           scores</strong> — nothing else identifies you publicly.</li>
-        <li>Sign-in with Google or Apple is <strong>optional</strong> and only
-          exists so your record survives reinstalls and device changes.</li>
+        <li>Sign-in with Google, Apple, or email is <strong>optional</strong>
+          and only exists so your record survives reinstalls and device
+          changes.</li>
         <li>We use standard crash reporting and analytics to keep the game
-          working, and rewarded ads are shown <strong>only when you choose to
-          watch one</strong> (currently non-personalized).</li>
+          working. Ads are <strong>non-personalized</strong>: rewarded ads play
+          only when you choose to watch one, and a short interstitial may
+          appear after every few lost runs.</li>
         <li>You can <strong>delete your account and all your leaderboard
           records</strong> from inside the app at any time.</li>
       </ul>
@@ -54,7 +56,12 @@
         anonymous account (a random technical identifier from Firebase
         Authentication). If you later sign in with Google or Apple, your
         account identifier and the display name provided by that service are
-        linked to it. We never see your password, and we do not request your
+        linked to it. If you create an email account instead, we collect your
+        <strong>email address</strong>; your password is handled entirely by
+        Firebase Authentication and stored only in hashed form — we never see
+        it. The email address is used solely for signing in and for service
+        emails (address verification and password reset, sent from
+        noreply@mathhell.com) — no marketing, ever. We do not request your
         contacts, photos, or location.</p>
       <p><strong>Leaderboard.</strong> When a run ends, the game submits your
         display name, score, level and question reached, answer statistics
@@ -70,23 +77,35 @@
       <p>To find bugs and understand what to improve, the app uses:</p>
       <ul>
         <li><strong>Google Firebase</strong> (Analytics, Crashlytics, Remote
-          Config) — anonymized usage events, crash logs, device model and OS
-          version, and app-instance identifiers.
+          Config) — usage events, crash logs, device model and OS version, and
+          pseudonymous identifiers (an app-instance identifier and your
+          technical account identifier, so we can see, for example, how many
+          players reach a given level — never your email or name).
           <a href="https://firebase.google.com/support/privacy" rel="noopener">Firebase privacy</a>.</li>
         <li><strong>Sentry</strong> — crash and error reports (stack traces,
-          device model, OS version). Events are processed in the EU.
+          device model, OS version, and your technical account identifier).
+          Events are processed in the EU.
           <a href="https://sentry.io/privacy/" rel="noopener">Sentry privacy</a>.</li>
       </ul>
       <p>These reports do not include your math answers or any content you
-        type; the game has no free-text input besides your player name.</p>
+        type; the game has no free-text input besides your player name and the
+        optional email sign-in form, and neither is sent to analytics or crash
+        reporting.</p>
     </div>
 
     <div class="panel">
       <h2><span class="tag">#</span> Advertising</h2>
-      <p>The game may offer an optional <strong>rewarded ad</strong> — for
-        example, to continue a run after losing. Ads appear only when you tap
-        the offer; there are no banners or forced interstitials. Ads are served
-        by <strong>Google AdMob</strong> and are currently requested in
+      <p>The game shows two kinds of ads, both served by
+        <strong>Google AdMob</strong>:</p>
+      <ul>
+        <li>An optional <strong>rewarded ad</strong> — for example, to continue
+          a run after losing. It plays only when you tap the offer.</li>
+        <li>A short <strong>interstitial ad</strong> that may appear on the
+          game-over screen after every few lost runs (currently every fifth;
+          the exact frequency can change). It never interrupts an active
+          run.</li>
+      </ul>
+      <p>There are no banner ads. All ads are currently requested in
         <strong>non-personalized</strong> mode, meaning they are based on
         context rather than a profile of you. The ad SDK may still process
         device information (such as identifiers, IP address, and coarse
@@ -116,7 +135,8 @@
           Settings.</li>
         <li><strong>Delete your account</strong> in Settings → Delete account.
           This permanently removes your leaderboard records, your best-results
-          data, and the account itself. It cannot be undone.</li>
+          data, and the account itself — including your email address, if you
+          signed in with one. It cannot be undone.</li>
         <li>You can also email us (below) to request access to or deletion of
           your data.</li>
       </ul>
@@ -135,9 +155,35 @@
       <p>The app is not directed at children under 13, does not knowingly
         collect personal information from them, and serves only
         non-personalized ads. Signing in with Google or Apple requires an
-        account with those services, which have their own age requirements. If
+        account with those services, which have their own age requirements;
+        creating an email account is likewise intended for users 13 and
+        older. If
         you believe a child has provided personal information through the app,
         contact us and we will delete it.</p>
+    </div>
+
+    <div class="panel">
+      <h2><span class="tag">#</span> Legal Bases, Retention, and Your Rights</h2>
+      <p>For players in the European Economic Area, the United Kingdom, and
+        similar jurisdictions: the data controller is the developer named in
+        the Contact section below. We process account and leaderboard data
+        because it is necessary to <strong>provide the game you asked
+        for</strong> (performance of a contract); we process crash reports,
+        analytics, and ad fraud-prevention data under our
+        <strong>legitimate interest</strong> in keeping the game working,
+        secure, and free; and where the law requires consent (for example, for
+        personalized ads, if ever introduced), we will ask for it first.</p>
+      <p><strong>Retention.</strong> Account and leaderboard data are kept
+        until you delete your account. Crash reports and analytics events are
+        retained by Firebase and Sentry for their standard limited periods
+        (typically no more than a few months to two years, per their linked
+        policies) and are not kept longer by us.</p>
+      <p><strong>Your rights.</strong> You may request access to, correction
+        of, a copy of, or deletion of your personal data, object to or ask us
+        to restrict processing, and lodge a complaint with your local data
+        protection authority. The in-app deletion described above covers most
+        of this instantly; for anything else, email us and we will respond
+        within 30 days.</p>
     </div>
 
     <div class="panel">
