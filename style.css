@@ -116,6 +116,36 @@ body {
 .btn:active { transform: scale(0.98); }
 .btn.accent { color: var(--accent); border-color: var(--accent); }
 
+.store-links {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 2px auto 10px;
+}
+.store-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 11px 16px;
+  border-radius: var(--r-card);
+  background: var(--ink);
+  color: var(--paper);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 14px;
+  border: 2px solid var(--ink);
+  transition: transform 0.09s ease, background 0.12s ease;
+}
+.store-btn:hover { transform: translateY(-1px); background: var(--accent); border-color: var(--accent); }
+.store-btn span { font-size: 17px; line-height: 1; }
+.download-note {
+  margin: 0 auto 18px;
+  color: var(--ink-faint);
+  font-size: 13px;
+}
+
 /* ---------- Feature cards ---------- */
 .features {
   display: grid;
