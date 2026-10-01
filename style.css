@@ -115,6 +115,13 @@ body {
 .btn:hover { transform: translateY(-1px); background: var(--surface-alt); }
 .btn:active { transform: scale(0.98); }
 .btn.accent { color: var(--accent); border-color: var(--accent); }
+.stores {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+.stores.left { justify-content: flex-start; margin-top: 12px; }
 
 /* ---------- Feature cards ---------- */
 .features {
